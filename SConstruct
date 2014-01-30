@@ -1,33 +1,19 @@
 # -*- python -*-
 
-AddOption(
-    "--prefix",
-    dest = "prefix",
-    type = "string",
-    nargs = 1,
-    action = "store",
-    metavar = "DIR",
-    help = "installation prefix")
-AddOption(
-    "--zeppelin",
-    dest = "zeppelin",
-    type = "string",
-    nargs = 1,
-    action = "store",
-    metavar = "DIR",
-    help = "zeppelin installation path")
+vars = Variables()
+vars.Add(PathVariable('PREFIX', 'prefix used to install files', '/usr'))
 
-env = Environment(PREFIX = GetOption("prefix"))
+env = Environment(variables = vars)
 
 env["CPPFLAGS"] = ["-O2", "-Wall", "-Werror", "-Wshadow", "-std=c++11", "-pthread"]
 env["CPPPATH"] = [Dir("src")]
 
-if GetOption("zeppelin") :
-    env["CPPPATH"] += ["%s/%s" % (GetOption("zeppelin"), "/usr/include")]
+if "PREFIX" in env :
+    env["CPPPATH"] += ["%s/include" % env["PREFIX"]]
 
 plugin = env.SharedLibrary(
     target = "file-server",
     source = ["src/plugin.cpp", "src/fileserver.cpp"]
 )
 
-env.Alias("install", env.Install("$PREFIX/usr/lib/zeppelin/plugins", plugin))
+env.Alias("install", env.Install("$PREFIX/lib/zeppelin/plugins", plugin))
