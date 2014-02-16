@@ -36,7 +36,7 @@ void FileServer::start(const Json::Value& config, zeppelin::plugin::PluginManage
 
 	if (httpServer.version() != HTTP_SERVER_VERSION)
 	{
-	    LOG("jsonrpc-remote: invalid http-server plugin version!");
+	    LOG("file-server: invalid http-server plugin version!");
 	    return;
 	}
 
@@ -44,7 +44,7 @@ void FileServer::start(const Json::Value& config, zeppelin::plugin::PluginManage
     }
     catch (const zeppelin::plugin::PluginInterfaceNotFoundException&)
     {
-	LOG("jsonrpc-remote: http-server interface not found");
+	LOG("file-server: http-server interface not found");
     }
 }
 
