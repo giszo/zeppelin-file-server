@@ -10,6 +10,9 @@ env["CPPFLAGS"] = ["-O2", "-Wall", "-Werror", "-Wshadow", "-std=c++11", "-pthrea
 env["CPPPATH"] = [Dir("src")]
 env["LIBPATH"] = []
 
+env["SHCXXCOMSTR"] = "Compiling $SOURCE"
+env["SHLINKCOMSTR"] = "Linking $TARGET"
+
 # jsoncpp library
 if "JSONCPP" in env :
     env["CPPPATH"] += ["%s/include" % env["JSONCPP"]]
